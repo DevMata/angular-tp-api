@@ -6,12 +6,14 @@
 
 ## Description
 
-This little API is built around a user crud to give example of common concepts like requests, responses and HTTP methods.
+A simple backend API. Built originally to provide Applaudo Angular trainees with a service to consume.
+
+It includes Auth management with JWT access and refresh tokens. 
 
 ## Installation
 
 ```bash
-$ npm install
+> npm install
 ```
 
 ## Before running the app
@@ -20,11 +22,11 @@ Check the example.env file to know the required env variables.
 
 ```
 # DB
-DB_USER=your db user
-DB_PASSWORD=your db password
-DB_HOST=your db host
-DB_PORT=your db port
-DB_NAME=your db name
+DB_URL=your db connection string
+
+# AUTH
+ACCESS_TOKEN_LIFETIME=access tokens lifetime in seconds
+REFRESH_TOKEN_LIFETIME=refresh tokens lifetime in seconds
 ```
 
 Then create your own `.env` file and replace the example values.
@@ -33,34 +35,24 @@ Then create your own `.env` file and replace the example values.
 
 ```bash
 # development
-$ npm run start
+> npm run start
 
 # watch mode
-$ npm run start:dev
+> npm run start:dev
+
+# debug mode
+> npm run start:debug
 
 # production mode
-$ npm run start:prod
+> npm run start:prod
 ```
 
 ## Test
 
 ```bash
 # unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
+> npm run test
 
 # test coverage
-$ npm run test:cov
+> npm run test:cov
 ```
-
-## References
-* [NestJs Docs](https://docs.nestjs.com/)
-* [Typeorm Docs](https://typeorm.io/)
-
-## Resources for learning
-* [NestJs series - Youtube playlist in spanish](https://www.youtube.com/playlist?list=PLzHaXzj_WAyk9NF0OIa1gRYqAntHF0fMF)
-* [NestJs profile on dev.to](https://dev.to/nestjs)
-* [NestJs:From zero to hero - Udemy](https://www.udemy.com/course/nestjs-zero-to-hero/)
-* [Official courses](https://courses.nestjs.com/)
