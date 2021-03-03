@@ -1,10 +1,14 @@
 {
   "name": "little-api",
-  "version": "0.0.1",
-  "description": "",
-  "author": "",
+  "version": "1.0.0",
+  "description": "A simple API built with NestJs.",
+  "author": "Antonio Mata <hildeamp@gmail.com>",
+  "keywords": ["Node.js","NestJs"],
   "private": true,
   "license": "UNLICENSED",
+  "engines": {
+    "node": "12.16.1"
+  },
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "nest build",
