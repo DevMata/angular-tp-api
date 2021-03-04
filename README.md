@@ -6,7 +6,7 @@
 
 ## Description
 
-This little API is built around a user crud to give example of common concepts like requests, responses and HTTP methods.
+Simple Node.js API built with NestJs. Built originally to provide Applaudo Angular trainees with a backend service to consume.
 
 ## Installation
 
@@ -20,11 +20,11 @@ Check the example.env file to know the required env variables.
 
 ```
 # DB
-DB_USER=your db user
-DB_PASSWORD=your db password
-DB_HOST=your db host
-DB_PORT=your db port
-DB_NAME=your db name
+DATABASE_URL=database url
+
+# AUTH
+ACCESS_TOKENS_LIFETIME=access tokens lifetime
+REFRESH_TOKENS_LIFETIME=refresh tokens lifetime
 ```
 
 Then create your own `.env` file and replace the example values.
@@ -37,6 +37,9 @@ $ npm run start
 
 # watch mode
 $ npm run start:dev
+
+# debug mode
+$ npm run start:debug
 
 # production mode
 $ npm run start:prod
@@ -55,12 +58,3 @@ $ npm run test:e2e
 $ npm run test:cov
 ```
 
-## References
-* [NestJs Docs](https://docs.nestjs.com/)
-* [Typeorm Docs](https://typeorm.io/)
-
-## Resources for learning
-* [NestJs series - Youtube playlist in spanish](https://www.youtube.com/playlist?list=PLzHaXzj_WAyk9NF0OIa1gRYqAntHF0fMF)
-* [NestJs profile on dev.to](https://dev.to/nestjs)
-* [NestJs:From zero to hero - Udemy](https://www.udemy.com/course/nestjs-zero-to-hero/)
-* [Official courses](https://courses.nestjs.com/)
