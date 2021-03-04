@@ -11,7 +11,7 @@ export class TypeOrmConfigService implements TypeOrmOptionsFactory {
     return {
       type: 'postgres',
       url: DATABASE_URL,
-      entities: ['dist/**/*.entity.js'],
+      entities: ['dist/**/*.entity{.ts,.js}'],
       synchronize: true,
     };
   }
