@@ -22,7 +22,7 @@ Check the example.env file to know the required env variables.
 
 ```
 # DB
-DB_URL=your db connection string
+DATABASE_URL=your db connection string
 
 # AUTH
 ACCESS_TOKEN_LIFETIME=access tokens lifetime in seconds
