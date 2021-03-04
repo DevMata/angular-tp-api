@@ -2,6 +2,7 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { ProductModule } from './product/product.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -19,7 +20,9 @@ async function bootstrap() {
     .setDescription('Angular TP API')
     .setVersion('1.0.0')
     .build();
-  const document = SwaggerModule.createDocument(app, config);
+  const document = SwaggerModule.createDocument(app, config, {
+    include: [ProductModule],
+  });
   SwaggerModule.setup('reference', app, document);
 
   await app.listen(3000);
