@@ -11,6 +11,35 @@ export class UserService {
     @InjectRepository(User) private readonly userRepository: Repository<User>,
   ) {}
 
+  private readonly users = [
+    {
+      id: 1,
+      username: 'user1',
+      password: 'p@ssw0rd',
+    },
+    {
+      id: 2,
+      username: 'user2',
+      password: 'p@ssw0rd',
+    },
+    {
+      id: 3,
+      username: 'user3',
+      password: 'p@ssw0rd',
+    },
+    {
+      id: 4,
+      username: 'user4',
+      password: 'p@ssw0rd',
+    },
+  ];
+
+  async findOne(
+    username: string,
+  ): Promise<{ id: number; username: string; password: string } | undefined> {
+    return this.users.find(user => user.username === username);
+  }
+
   getUsers(): Promise<User[]> {
     return this.userRepository.find();
   }
