@@ -4,11 +4,13 @@ import { TypeOrmModuleOptions, TypeOrmOptionsFactory } from '@nestjs/typeorm';
 @Injectable()
 export class TypeOrmConfigService implements TypeOrmOptionsFactory {
   createTypeOrmOptions(): TypeOrmModuleOptions {
-    const { DB_USER, DB_PASSWORD, DB_HOST, DB_PORT, DB_NAME } = process.env;
+    const {
+      DATABASE_URL = 'postgres://myUser:myPassword@localhost:5432/angular_tp_db',
+    } = process.env;
 
     return {
       type: 'postgres',
-      url: `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}`,
+      url: DATABASE_URL,
       entities: ['dist/**/*.entity.js'],
       synchronize: true,
     };

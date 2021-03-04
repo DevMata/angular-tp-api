@@ -1,10 +1,11 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
-import { config } from 'dotenv';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { AuthModule } from './auth/auth.module';
+import { ProductModule } from './product/product.module';
 
 async function bootstrap() {
-  config();
   const app = await NestFactory.create(AppModule);
 
   app.useGlobalPipes(
@@ -14,6 +15,16 @@ async function bootstrap() {
       forbidNonWhitelisted: true,
     }),
   );
+
+  const config = new DocumentBuilder()
+    .setTitle('Angular trainee program API')
+    .setDescription('Angular trainee program API')
+    .setVersion('1.0.0')
+    .build();
+  const document = SwaggerModule.createDocument(app, config, {
+    include: [AuthModule, ProductModule],
+  });
+  SwaggerModule.setup('api', app, document);
 
   await app.listen(3000);
 }
