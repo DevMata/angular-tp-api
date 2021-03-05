@@ -19,8 +19,8 @@ async function bootstrap() {
   );
 
   const config = new DocumentBuilder()
-    .setTitle('Angular trainee program API')
-    .setDescription('Angular trainee program API')
+    .setTitle('Angular Trainee Program API')
+    .setDescription('Angular Trainee Program API')
     .setVersion('1.0.0')
     .addBearerAuth()
     .build();
