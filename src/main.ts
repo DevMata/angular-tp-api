@@ -4,6 +4,8 @@ import { ValidationPipe } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { AuthModule } from './auth/auth.module';
 import { ProductModule } from './product/product.module';
+import { config } from 'dotenv';
+config();
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
