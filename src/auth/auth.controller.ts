@@ -1,6 +1,6 @@
-import { Controller, Post, UseGuards, Request } from '@nestjs/common';
+import { Controller, Post, UseGuards, Request, Get } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
-import { ApiBody, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiBody, ApiTags } from '@nestjs/swagger';
 import { LoginDto } from './login.dto';
 import { AuthService } from './auth.service';
 
@@ -13,5 +13,12 @@ export class AuthController {
   @Post('login')
   async login(@Request() req) {
     return this.authService.login(req.user);
+  }
+
+  @ApiBearerAuth()
+  @UseGuards(AuthGuard('jwt'))
+  @Get('profile')
+  getProfile(@Request() req) {
+    return req.user;
   }
 }
