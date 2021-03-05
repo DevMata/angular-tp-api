@@ -12,12 +12,6 @@ import { JwtModule } from '@nestjs/jwt';
     ProductModule,
     UserModule,
     TypeOrmModule.forRootAsync({ useClass: TypeOrmConfigService }),
-    JwtModule.register({
-      secret: process.env.ACCESS_TOKENS_SECRET,
-      signOptions: {
-        expiresIn: process.env.ACCESS_TOKENS_SECRET,
-      },
-    }),
   ],
   providers: [TypeOrmConfigService],
 })
