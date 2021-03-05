@@ -23,8 +23,13 @@ Check the example.env file to know the required env variables.
 DATABASE_URL=database url
 
 # AUTH
+ACCESS_TOKENS_SECRET=access tokens secrets
 ACCESS_TOKENS_LIFETIME=access tokens lifetime
+REFRESH_TOKENS_SECRET=refresh tokens lifetime
 REFRESH_TOKENS_LIFETIME=refresh tokens lifetime
+
+# NODE.JS
+NODE_ENV=common Node.js flag
 ```
 
 Then create your own `.env` file and replace the example values.
