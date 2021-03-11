@@ -1,8 +1,8 @@
 {
   "name": "little-api",
-  "version": "1.3.0",
-  "description": "",
-  "author": "",
+  "version": "1.4.0",
+  "description": "Simple APi",
+  "author": "Antonio Mata <hildeamp@gmail.com>",
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
