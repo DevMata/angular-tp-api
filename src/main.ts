@@ -4,6 +4,7 @@ import { ValidationPipe } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { AuthModule } from './auth/auth.module';
 import { config } from 'dotenv';
+import { ProductModule } from './product/product.module';
 config();
 
 async function bootstrap() {
@@ -24,7 +25,7 @@ async function bootstrap() {
     .addBearerAuth()
     .build();
   const document = SwaggerModule.createDocument(app, config, {
-    include: [AuthModule],
+    include: [AuthModule, ProductModule],
   });
   SwaggerModule.setup('reference', app, document);
 
