@@ -6,6 +6,12 @@ import { Product } from './entities/product.entity';
 import { Product as ProductDoc } from './doc/product.doc';
 import { InjectRepository } from '@nestjs/typeorm';
 import { plainToClass } from 'class-transformer';
+import { PaginationDto } from '../core/dto/pagination.dto';
+import {
+  getOrmTakeAndSkip,
+  getPagination,
+} from '../core/utils/pagination.utils';
+import { Products } from './doc/producst.doc';
 
 @Injectable()
 export class ProductService {
@@ -21,8 +27,20 @@ export class ProductService {
     });
   }
 
-  findAll(): Promise<ProductDoc[]> {
-    return this.productRepository.find();
+  async findAll(pagination: PaginationDto): Promise<Products> {
+    const { take, skip } = getOrmTakeAndSkip(pagination);
+    const [
+      products,
+      totalProducts,
+    ] = await this.productRepository.findAndCount({ take, skip });
+
+    const productsResponse = {
+      products,
+      pagination: getPagination(pagination, totalProducts),
+    };
+    return plainToClass(Products, productsResponse, {
+      excludeExtraneousValues: true,
+    });
   }
 
   async findOne(productId: number): Promise<ProductDoc> {
