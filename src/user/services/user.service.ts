@@ -11,25 +11,13 @@ import { Repository } from 'typeorm';
 import { hashSync } from 'bcryptjs';
 import { plainToClass } from 'class-transformer';
 import { Signup } from '../../auth/doc/signup.doc';
+import { User as UserDoc } from '../doc/user.doc';
 
 @Injectable()
 export class UserService {
   constructor(
     @InjectRepository(User) private readonly userRepository: Repository<User>,
   ) {}
-
-  users = [
-    { id: 1, username: 'user1', password: 'p@ssw0rd' },
-    { id: 2, username: 'user2', password: 'p@ssw0rd' },
-    { id: 3, username: 'user3', password: 'p@ssw0rd' },
-    { id: 4, username: 'user4', password: 'p@ssw0rd' },
-  ];
-
-  async findOne(
-    username: string,
-  ): Promise<{ id: number; username: string; password: string } | undefined> {
-    return this.users.find(user => user.username === username);
-  }
 
   findUserByEmail(email: string): Promise<User> {
     return this.userRepository.findOne({ where: { email } });
@@ -39,12 +27,13 @@ export class UserService {
     return this.userRepository.find();
   }
 
-  async getUser(userId: number): Promise<User> {
+  async getUser(userId: number): Promise<UserDoc> {
     const user = await this.userRepository.findOne(userId);
     if (!user) {
       throw new NotFoundException('The user does not exist.');
     }
-    return user;
+
+    return plainToClass(UserDoc, user, { excludeExtraneousValues: true });
   }
 
   async createUser(createUser: CreateUserDto): Promise<Signup> {

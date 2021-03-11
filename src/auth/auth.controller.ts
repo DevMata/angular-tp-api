@@ -13,6 +13,7 @@ import { AuthService } from './auth.service';
 import { SignUpDto } from './dto/sign-up.dto';
 import { UserService } from '../user/services/user.service';
 import { Signup } from './doc/signup.doc';
+import { User } from '../user/doc/user.doc';
 
 @ApiTags('Auth')
 @Controller('auth')
@@ -37,7 +38,7 @@ export class AuthController {
   @ApiBearerAuth()
   @UseGuards(AuthGuard('jwt'))
   @Get('profile')
-  getProfile(@Request() req) {
-    return req.user;
+  getProfile(@Request() req): Promise<User> {
+    return this.userService.getUser(req.user.userId);
   }
 }

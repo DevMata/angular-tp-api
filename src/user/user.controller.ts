@@ -11,6 +11,7 @@ import {
 } from '@nestjs/common';
 import { UserService } from './services/user.service';
 import { User } from './entities/user.entity';
+import { User as UserDoc } from './doc/user.doc';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { Signup } from '../auth/doc/signup.doc';
@@ -25,7 +26,7 @@ export class UserController {
   }
 
   @Get(':userId')
-  getUser(@Param('userId') userId: number): Promise<User> {
+  getUser(@Param('userId') userId: number): Promise<UserDoc> {
     return this.userService.getUser(userId);
   }
 
