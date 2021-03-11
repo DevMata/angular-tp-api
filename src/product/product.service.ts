@@ -21,8 +21,8 @@ export class ProductService {
     });
   }
 
-  findAll() {
-    return `This action returns all product`;
+  findAll(): Promise<ProductDoc[]> {
+    return this.productRepository.find();
   }
 
   async findOne(productId: number): Promise<ProductDoc> {
