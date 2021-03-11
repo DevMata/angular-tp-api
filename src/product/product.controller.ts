@@ -3,11 +3,11 @@ import {
   Get,
   Post,
   Body,
-  Put,
   Param,
   Delete,
   HttpStatus,
   HttpCode,
+  Patch,
 } from '@nestjs/common';
 import { ProductService } from './product.service';
 import { CreateProductDto } from './dto/create-product.dto';
@@ -36,11 +36,11 @@ export class ProductController {
     return this.productService.findOne(productIdParam.productId);
   }
 
-  @Put(':productId')
+  @Patch(':productId')
   update(
     @Param() productIdParam: ProductIdParamDto,
     @Body() updateProductDto: UpdateProductDto,
-  ) {
+  ): Promise<ProductDoc> {
     return this.productService.update(
       productIdParam.productId,
       updateProductDto,

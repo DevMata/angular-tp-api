@@ -36,8 +36,22 @@ export class ProductService {
     });
   }
 
-  update(productId: number, updateProductDto: UpdateProductDto) {
-    return `This action updates a roduct`;
+  async update(
+    productId: number,
+    updateProductDto: UpdateProductDto,
+  ): Promise<ProductDoc> {
+    const product = await this.productRepository.findOne(productId);
+    if (!product) {
+      throw new NotFoundException('product not found');
+    }
+
+    const updatedProduct = await this.productRepository.save({
+      ...product,
+      ...updateProductDto,
+    });
+    return plainToClass(ProductDoc, updatedProduct, {
+      excludeExtraneousValues: true,
+    });
   }
 
   async remove(productId: number): Promise<void> {
