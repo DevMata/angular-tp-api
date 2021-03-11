@@ -1,9 +1,14 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { User } from '../entities/user.entity';
 import { CreateUserDto } from '../dto/create-user.dto';
 import { UpdateUserDto } from '../dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { hashSync } from 'bcryptjs';
 
 @Injectable()
 export class UserService {
@@ -37,7 +42,17 @@ export class UserService {
   }
 
   createUser(createUser: CreateUserDto): Promise<User> {
-    return this.userRepository.save(createUser);
+    const { password, passwordConfirmation, ...userRest } = createUser;
+    if (password !== passwordConfirmation) {
+      throw new BadRequestException(
+        `password and password confirmation don't match`,
+      );
+    }
+
+    return this.userRepository.save({
+      ...userRest,
+      password: hashSync(password),
+    });
   }
 
   async updateUser(userId: number, updateUser: UpdateUserDto): Promise<User> {
