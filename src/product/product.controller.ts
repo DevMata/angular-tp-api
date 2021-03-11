@@ -11,7 +11,7 @@ import { ProductService } from './product.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { ApiTags } from '@nestjs/swagger';
-import { Product } from './doc/product.doc';
+import { Product as ProductDoc, Product } from './doc/product.doc';
 import { ProductIdParamDto } from './dto/product-id-param.dto';
 
 @ApiTags('Products')
@@ -30,7 +30,7 @@ export class ProductController {
   }
 
   @Get(':productId')
-  findOne(@Param() productIdParam: ProductIdParamDto) {
+  findOne(@Param() productIdParam: ProductIdParamDto): Promise<ProductDoc> {
     return this.productService.findOne(productIdParam.productId);
   }
 
