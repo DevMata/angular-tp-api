@@ -12,6 +12,7 @@ import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { ApiTags } from '@nestjs/swagger';
 import { Product } from './doc/product.doc';
+import { ProductIdParamDto } from './dto/product-id-param.dto';
 
 @ApiTags('Products')
 @Controller('products')
@@ -28,18 +29,24 @@ export class ProductController {
     return this.productService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.productService.findOne(+id);
+  @Get(':productId')
+  findOne(@Param() productIdParam: ProductIdParamDto) {
+    return this.productService.findOne(productIdParam.productId);
   }
 
-  @Put(':id')
-  update(@Param('id') id: string, @Body() updateProductDto: UpdateProductDto) {
-    return this.productService.update(+id, updateProductDto);
+  @Put(':productId')
+  update(
+    @Param() productIdParam: ProductIdParamDto,
+    @Body() updateProductDto: UpdateProductDto,
+  ) {
+    return this.productService.update(
+      productIdParam.productId,
+      updateProductDto,
+    );
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.productService.remove(+id);
+  @Delete(':productId')
+  remove(@Param() productIdParam: ProductIdParamDto) {
+    return this.productService.remove(productIdParam.productId);
   }
 }
