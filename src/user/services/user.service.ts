@@ -9,6 +9,8 @@ import { UpdateUserDto } from '../dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { hashSync } from 'bcryptjs';
+import { plainToClass } from 'class-transformer';
+import { Signup } from '../../auth/doc/signup.doc';
 
 @Injectable()
 export class UserService {
@@ -41,7 +43,7 @@ export class UserService {
     return user;
   }
 
-  createUser(createUser: CreateUserDto): Promise<User> {
+  async createUser(createUser: CreateUserDto): Promise<Signup> {
     const { password, passwordConfirmation, ...userRest } = createUser;
     if (password !== passwordConfirmation) {
       throw new BadRequestException(
@@ -49,10 +51,12 @@ export class UserService {
       );
     }
 
-    return this.userRepository.save({
+    const newUser = await this.userRepository.save({
       ...userRest,
       password: hashSync(password),
     });
+
+    return plainToClass(Signup, newUser, { excludeExtraneousValues: true });
   }
 
   async updateUser(userId: number, updateUser: UpdateUserDto): Promise<User> {

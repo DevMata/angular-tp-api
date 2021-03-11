@@ -13,6 +13,7 @@ import { UserService } from './services/user.service';
 import { User } from './entities/user.entity';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { Signup } from '../auth/doc/signup.doc';
 
 @Controller('users')
 export class UserController {
@@ -29,7 +30,7 @@ export class UserController {
   }
 
   @Post()
-  createUser(@Body() createUser: CreateUserDto): Promise<User> {
+  createUser(@Body() createUser: CreateUserDto): Promise<Signup> {
     return this.userService.createUser(createUser);
   }
 
