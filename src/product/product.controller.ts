@@ -6,6 +6,8 @@ import {
   Put,
   Param,
   Delete,
+  HttpStatus,
+  HttpCode,
 } from '@nestjs/common';
 import { ProductService } from './product.service';
 import { CreateProductDto } from './dto/create-product.dto';
@@ -45,8 +47,9 @@ export class ProductController {
     );
   }
 
+  @HttpCode(HttpStatus.NO_CONTENT)
   @Delete(':productId')
-  remove(@Param() productIdParam: ProductIdParamDto) {
+  remove(@Param() productIdParam: ProductIdParamDto): Promise<void> {
     return this.productService.remove(productIdParam.productId);
   }
 }

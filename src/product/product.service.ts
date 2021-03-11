@@ -36,11 +36,12 @@ export class ProductService {
     });
   }
 
-  update(id: number, updateProductDto: UpdateProductDto) {
-    return `This action updates a #${id} product`;
+  update(productId: number, updateProductDto: UpdateProductDto) {
+    return `This action updates a roduct`;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} product`;
+  async remove(productId: number): Promise<void> {
+    await this.findOne(productId);
+    await this.productRepository.delete(productId);
   }
 }
