@@ -4,6 +4,7 @@ import { ValidationPipe } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { AuthModule } from './auth/auth.module';
 import { config } from 'dotenv';
+import { ProductModule } from './product/product.module';
 config();
 
 async function bootstrap() {
@@ -11,20 +12,21 @@ async function bootstrap() {
 
   app.useGlobalPipes(
     new ValidationPipe({
-      whitelist: true,
       transform: true,
-      forbidNonWhitelisted: true,
+      whitelist: true,
+      validationError: { target: false },
+      transformOptions: { enableImplicitConversion: true },
     }),
   );
 
   const config = new DocumentBuilder()
     .setTitle('Angular Trainee Program API')
     .setDescription('Angular Trainee Program API')
-    .setVersion('1.2.0')
+    .setVersion('1.3.0')
     .addBearerAuth()
     .build();
   const document = SwaggerModule.createDocument(app, config, {
-    include: [AuthModule],
+    include: [AuthModule, ProductModule],
   });
   SwaggerModule.setup('reference', app, document);
 
