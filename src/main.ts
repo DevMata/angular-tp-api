@@ -4,6 +4,7 @@ import { ValidationPipe } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { AuthModule } from './auth/auth.module';
 import { config } from 'dotenv';
+import { ProductModule } from './product/product.module';
 config();
 
 async function bootstrap() {
@@ -11,9 +12,10 @@ async function bootstrap() {
 
   app.useGlobalPipes(
     new ValidationPipe({
-      whitelist: true,
       transform: true,
-      forbidNonWhitelisted: true,
+      whitelist: true,
+      validationError: { target: false },
+      transformOptions: { enableImplicitConversion: true },
     }),
   );
 
@@ -24,7 +26,7 @@ async function bootstrap() {
     .addBearerAuth()
     .build();
   const document = SwaggerModule.createDocument(app, config, {
-    include: [AuthModule],
+    include: [AuthModule, ProductModule],
   });
   SwaggerModule.setup('reference', app, document);
 
