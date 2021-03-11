@@ -20,9 +20,9 @@ async function bootstrap() {
   );
 
   const config = new DocumentBuilder()
-    .setTitle('Angular trainee program API')
-    .setDescription('Angular trainee program API')
-    .setVersion('1.1.0')
+    .setTitle('Angular Trainee Program API')
+    .setDescription('Angular Trainee Program API')
+    .setVersion('1.3.0')
     .addBearerAuth()
     .build();
   const document = SwaggerModule.createDocument(app, config, {
