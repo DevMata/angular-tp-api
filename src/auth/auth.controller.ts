@@ -14,6 +14,7 @@ import { SignUpDto } from './dto/sign-up.dto';
 import { UserService } from '../user/services/user.service';
 import { Signup } from './doc/signup.doc';
 import { User } from '../user/doc/user.doc';
+import { Login } from './doc/login.doc';
 
 @ApiTags('Auth')
 @Controller('auth')
@@ -26,7 +27,7 @@ export class AuthController {
   @UseGuards(AuthGuard('local'))
   @ApiBody({ type: LoginDto })
   @Post('login')
-  async login(@Request() req) {
+  login(@Request() req): Login {
     return this.authService.login(req.user);
   }
 
