@@ -1,8 +1,12 @@
-import { Injectable } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { UserService } from '../user/services/user.service';
 import { JwtService } from '@nestjs/jwt';
 import { compareSync } from 'bcryptjs';
-import { sign } from 'jsonwebtoken';
+import { sign, verify } from 'jsonwebtoken';
 import { Login } from './doc/login.doc';
 
 @Injectable()
@@ -18,12 +22,6 @@ export class AuthService {
     this.refreshTokensLifetime = process.env.REFRESH_TOKEN_LIFETIME || '14400s';
   }
 
-  signRefreshToken(payload: any): string {
-    const { refreshTokensSecret, refreshTokensLifetime: expiresIn } = this;
-
-    return sign(payload, refreshTokensSecret, { expiresIn });
-  }
-
   async validateUser(
     email: string,
     password: string,
@@ -36,6 +34,12 @@ export class AuthService {
     return null;
   }
 
+  signRefreshToken(payload: any): string {
+    const { refreshTokensSecret, refreshTokensLifetime: expiresIn } = this;
+
+    return sign(payload, refreshTokensSecret, { expiresIn });
+  }
+
   login(user: { id: number; name: string; email: string }): Login {
     const { id: sub, name: username, email } = user;
     const payload = { sub, username, email };
@@ -43,5 +47,23 @@ export class AuthService {
       accessToken: this.jwtService.sign(payload),
       refreshToken: this.signRefreshToken(payload),
     };
+  }
+
+  async refresh(refreshToken: string): Promise<Login> {
+    const { refreshTokensSecret } = this;
+    let tokenPayload;
+
+    try {
+      tokenPayload = verify(refreshToken, refreshTokensSecret);
+    } catch {
+      throw new UnauthorizedException('The refresh token is invalid');
+    }
+
+    const user = await this.userService.findUserByEmail(tokenPayload['email']);
+    if (!user) {
+      throw new NotFoundException('The user does not exist.');
+    }
+
+    return this.login(user);
   }
 }
