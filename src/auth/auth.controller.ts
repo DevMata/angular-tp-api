@@ -14,6 +14,8 @@ import { SignUpDto } from './dto/sign-up.dto';
 import { UserService } from '../user/services/user.service';
 import { Signup } from './doc/signup.doc';
 import { User } from '../user/doc/user.doc';
+import { Login } from './doc/login.doc';
+import { RefreshTokenDto } from './dto/refresh-token.dto';
 
 @ApiTags('Auth')
 @Controller('auth')
@@ -26,8 +28,13 @@ export class AuthController {
   @UseGuards(AuthGuard('local'))
   @ApiBody({ type: LoginDto })
   @Post('login')
-  async login(@Request() req) {
+  login(@Request() req): Login {
     return this.authService.login(req.user);
+  }
+
+  @Post('refresh')
+  refresh(@Body() refreshToken: RefreshTokenDto): Promise<Login> {
+    return this.authService.refresh(refreshToken.refreshToken);
   }
 
   @Post('signup')
